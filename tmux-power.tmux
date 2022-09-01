@@ -42,8 +42,8 @@ G10=#626262 #241
 G11=#6c6c6c #242
 G12=#767676 #243
 
-FG="$G10"
-BG="$G04"
+FG=$(tmux_get '@tmux_power_theme_foreground' $G10)
+BG=$(tmux_get '@tmux_power_theme_background' $G04)
 
 # Status options
 tmux_set status-interval 1
