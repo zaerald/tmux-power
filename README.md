@@ -45,6 +45,13 @@ set -g @tmux_power_date_format '%F'
 set -g @tmux_power_time_format '%T'
 ```
 
+You can hide the date or time:
+
+```tmux
+set -g @tmux_power_show_time false
+set -g @tmux_power_show_date false
+```
+
 You can also customize the icons:
 
 ```tmux

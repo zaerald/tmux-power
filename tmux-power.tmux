@@ -22,7 +22,9 @@ tmux_set() {
 right_arrow_icon=$(tmux_get '@tmux_power_right_arrow_icon' '')
 left_arrow_icon=$(tmux_get '@tmux_power_left_arrow_icon' '')
 time_icon="$(tmux_get '@tmux_power_time_icon' '')"
+show_time="$(tmux_get @tmux_power_show_time true)"
 date_icon="$(tmux_get '@tmux_power_date_icon' '')"
+show_date="$(tmux_get @tmux_power_show_date true)"
 prefix_highlight_pos=$(tmux_get @tmux_power_prefix_highlight_pos)
 time_format=$(tmux_get @tmux_power_time_format '%T')
 date_format=$(tmux_get @tmux_power_date_format '%F')
@@ -76,7 +78,17 @@ tmux_set status-left "$LS"
 tmux_set status-right-bg "$G04"
 tmux_set status-right-fg "G12"
 tmux_set status-right-length 150
-RS="#[fg=$G06]$left_arrow_icon#[fg=$TC,bg=$G06] $time_icon $time_format #[fg=$TC,bg=$G06]$left_arrow_icon#[fg=$G04,bg=$TC] $date_icon $date_format "
+RS=""
+if "$show_time"; then
+    RS="$RS#[fg=$G06]$left_arrow_icon#[fg=$TC,bg=$G06] $time_icon $time_format "
+fi
+if "$show_date"; then
+    RS="$RS#[fg=$TC,bg=$BG]"
+    if "$show_time"; then
+        RS="$RS#[fg=$TC,bg=$G06]"
+    fi
+    RS="$RS$left_arrow_icon#[fg=$G04,bg=$TC] $date_icon $date_format "
+fi
 if [[ $prefix_highlight_pos == 'R' || $prefix_highlight_pos == 'LR' ]]; then
     RS="#{prefix_highlight}$RS"
 fi
